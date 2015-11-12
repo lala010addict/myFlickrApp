@@ -18,15 +18,20 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
+Photography Portfolio Generator
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+Portfolio Generator for photographers to showcase their work using their flickr pictures.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+if i wanna show you my portfolio right now, i'll have to either make a website that contains my work or show you my flickr account which is very messy and i might not want you to see all of my random pix.... but making a website is too complicated.. so my app jus generates a nice looking page so you can show your photos to someone without having to make a website or showing your flickr account
 
 ## Problem ##
   > Describe the problem your product solves.
+
+generate a nice looking portfolio without making your own website or giving out flickr account.
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
