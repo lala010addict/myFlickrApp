@@ -8,7 +8,7 @@ angular.module('myFlickr.services', ['ngResource'])
     if (!userID) {
       userID = "124175261@N05";
     }
-    console.log(userID)
+   // console.log(userID)
 
     var findPhotoSetByUser = "https://api.flickr.com/services/rest/" +
       "?method=flickr.photosets.getList" +
@@ -18,7 +18,9 @@ angular.module('myFlickr.services', ['ngResource'])
       "&per_page=100" +
       "&format=json&nojsoncallback=1"
 
-    return $http.get(findPhotoSetByUser).success(function(data) {
+    return $http.get(findPhotoSetByUser, {
+      cache: true
+    }).success(function(data) {
       // console.log(data.photosets)
       return data.photosets.photoset
 
@@ -37,7 +39,9 @@ angular.module('myFlickr.services', ['ngResource'])
 
     //console.log(URL)
 
-    return $http.get(URL).success(function(data) {
+    return $http.get(URL, {
+      cache: true
+    }).success(function(data) {
       return data.photoset.photo
         // $scope.set = data.photosets.photoset
     });
@@ -52,7 +56,9 @@ angular.module('myFlickr.services', ['ngResource'])
       "&format=json&nojsoncallback=1";
 
 
-    return $http.get(findByUsername).success(function(data) {
+    return $http.get(findByUsername, {
+      cache: true
+    }).success(function(data) {
       //  console.log(data)
       return data;
     });

@@ -2,12 +2,11 @@ angular.module('myFlickr', ['myFlickr.services', 'ngResource'])
 
 .controller('menu', ['$scope', "$http", 'PhotoSet', function($scope, $http, PhotoSet) {
   $scope.data = {}
-  $scope.sets = {}
-  $scope.all = function() {
-    $scope.photos = $scope.pix.slice(0, 100)
-    return $scope.getPhotos()
+  $scope.all = function(id) {
+    console.log(id)
+    $scope.photos = id.slice(0, 100)
   }
-  $scope.username = ""
+  $scope.username = "pengphotos"
   $scope.click = function(e) {
     alert(e)
   }
@@ -30,28 +29,38 @@ angular.module('myFlickr', ['myFlickr.services', 'ngResource'])
   }
 
   $scope.pix = [];
-  $scope.getSet();
+  $scope.idHolder = []
+
+  $scope.getSet()
 
   $scope.getPhotos = function(item) {
+    console.log(item);
     PhotoSet.getPhotos(item)
       .success(function(data) {
 
         $scope.photos = data.photoset.photo
           //console.log(data.photoset.photo)
         _.each(data.photoset.photo, function(item) {
-          $scope.pix.push(item)
+
+          if ($scope.idHolder.indexOf(item.id) === -1) {
+            // console.log(item.id)
+            $scope.idHolder.push(item.id)
+            console.log("more thing got pushed")
+            $scope.pix.push(item)
+          }
         })
       })
   }
 
-
-
-
+  //booh!
 
   $scope.getUser = function(username) {
+    $scope.pix = [];
+    $scope.idHolder = []
     console.log(username)
     PhotoSet.getUser(username)
       .success(function(data) {
+        console.log(data)
         if (data.code === 1 || undefined) {
           alert(data.message)
         } else {
