@@ -1,7 +1,6 @@
 angular.module('myFlickr.services', ['ngResource'])
 
 .factory('PhotoSet', ['$http', function($http) {
-
   var userID = "124175261@N05";
   //freezingcoffee
   // console.log(findPhotoSetByUser)
@@ -13,7 +12,7 @@ angular.module('myFlickr.services', ['ngResource'])
 
     var findPhotoSetByUser = "https://api.flickr.com/services/rest/" +
       "?method=flickr.photosets.getList" +
-      "&api_key=YOURAPI" +
+      "&api_key=" + api_key +
       "&user_id=" + userID +
       "&privacy_filter=1" +
       "&per_page=100" +
@@ -30,7 +29,7 @@ angular.module('myFlickr.services', ['ngResource'])
   var getPhotos = function(setId) {
     var URL = "https://api.flickr.com/services/rest/" +
       "?method=flickr.photosets.getPhotos" +
-      "&api_key=YOURAPI" +
+      "&api_key=" + api_key +
       "&photoset_id=" + setId +
       "&privacy_filter=1" +
       "&per_page=100" +
@@ -48,7 +47,7 @@ angular.module('myFlickr.services', ['ngResource'])
   var getUser = function(username) {
     //  var username = $("input:first").val();
     var findByUsername = "https://api.flickr.com/services/rest/?method=" +
-      "flickr.people.findByUsername&api_key=YOURAPI" +
+      "flickr.people.findByUsername&api_key=" + api_key +
       "&username=" + username +
       "&format=json&nojsoncallback=1";
 
