@@ -3,6 +3,10 @@ angular.module('myFlickr', ['myFlickr.services', 'ngResource'])
 .controller('menu', ['$scope', "$http", 'PhotoSet', function($scope, $http, PhotoSet) {
   $scope.data = {}
   $scope.sets = {}
+  $scope.all = function() {
+    $scope.photos = $scope.pix.slice(0, 100)
+    return $scope.getPhotos()
+  }
   $scope.username = ""
   $scope.click = function(e) {
     alert(e)
@@ -33,11 +37,16 @@ angular.module('myFlickr', ['myFlickr.services', 'ngResource'])
       .success(function(data) {
 
         $scope.photos = data.photoset.photo
+          //console.log(data.photoset.photo)
         _.each(data.photoset.photo, function(item) {
-          console.log(item.id)
+          $scope.pix.push(item)
         })
       })
   }
+
+
+
+
 
   $scope.getUser = function(username) {
     console.log(username)

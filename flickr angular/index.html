@@ -11,8 +11,8 @@
   <script src="bower_components/swipebox/src/js/jquery.swipebox.min.js"></script>
   <link rel="stylesheet" href="bower_components/swipebox/src/css/swipebox.min.css">
   <link rel="stylesheet" href="style.css">
- <script src = "config.json"></script>
- <!--  <link rel="stylesheet" href="style.scss"> -->
+  <script src="config.json"></script>
+  <!--  <link rel="stylesheet" href="style.scss"> -->
   <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>-->
   <!--   // <script type="text/javascript" src="config.json"></script> -->
@@ -20,21 +20,40 @@
 
 <body>
   <div ng-controller="menu">
+    <code>values={{values.status}}</code>
     <div class="srch">
       <input ng-model="username" type="text" placeholder="Flickr Username">
       <button ng-click="getUser(username)">Search</button>
     </div>
-
     <ul class="cbp-vimenu">
-       <h2>Sets</h2>
+      <h2>Sets</h2>
+     <li ng-click="all(x.id)" value='all' ng-model='values.status'>All</li>
       <div ng-repeat="x in data">
-        <li ng-click="getPhotos(x.id)"> {{x.title._content}}
+     
+        <li ng-click="getPhotos(x.id)" value='else' ng-model='values.status'> {{x.title._content}}
         </li>
       </div>
     </ul>
     <div class="gallery">
-      <a ng-repeat="x in photos" class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg"><img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg"></a>
+      <a ng-repeat="x in photos"  class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg"><img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg"></a>
     </div>
+<!--     <div class="gallery">
+      <a ng-repeat="x in pix" ng-if="getPhotos(x.id)" class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg"><img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg"></a>
+    </div> -->
+    <!--     <div ng-switch on ="values.status" >
+      <div ng-switch-when="all">
+        <div class="gallery">
+          <a ng-repeat="x in pix" class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg"><img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg"></a>
+        </div>
+      </div>
+      <div ng-switch-when="else">
+        <div class="gallery">
+          <a ng-repeat="x in photos" class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg"><img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg"></a>
+        </div>
+      </div> -->
+    <!--   <div ng-switch-default>
+        <h2> Visitor Section</h2>
+      </div> -->
   </div>
   <script type="text/javascript" src="myflickr.js"></script>
   <script type="text/javascript" src="factory.js"></script>
