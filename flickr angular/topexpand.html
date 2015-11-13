@@ -55,7 +55,10 @@
   <script type="text/javascript">
   $(function() {
     $('.swipebox').swipebox();
-
+    $("body").scroll(function() {
+      console.log('scrolled!!!!!!!!')
+      classie.remove(document.body, 'show-menu');
+    });
   })
   </script>
 </body>
