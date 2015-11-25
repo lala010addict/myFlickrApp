@@ -1,15 +1,34 @@
-angular.module('myFlickr', ['myFlickr.services', 'ngResource'])
-
-.controller('menu', ['$scope', "$http", 'PhotoSet', function($scope, $http, PhotoSet) {
+myFlickr.controller('menu', ['$scope', "$http", 'PhotoSet', "$location", '$routeParams', function($scope, $http, PhotoSet, $location, $routeParams) {
   $scope.data = {}
   $scope.all = function(id) {
-    console.log(id)
-    $scope.photos = id.slice(0, 100)
+
+    $scope.photos = id.slice(0, 300)
+    console.log($scope.photos)
   }
-  $scope.username = "pengphotos"
+  $scope.username = '';
+
+
+  // $routeParams.username =  $scope.username
+  //|| "booh!";
   $scope.click = function(e) {
     alert(e)
   }
+
+
+  $http.get("/:name").success(function(data) {
+    var username = $location.absUrl().split('/')[3]
+    if (!username) {
+      username = 'pengphotos'
+      $scope.getUser(username);
+    } else { //  var username = username;
+      $scope.username = username
+      $scope.getUser(username);
+    }
+
+  });
+
+
+
   $scope.photos = {};
   $scope.getSet = function(userID) {
     PhotoSet.getSet(userID)
@@ -31,21 +50,21 @@ angular.module('myFlickr', ['myFlickr.services', 'ngResource'])
   $scope.pix = [];
   $scope.idHolder = []
 
-  $scope.getSet()
+  //$scope.getSet()
 
   $scope.getPhotos = function(item) {
-    console.log(item);
+    //  console.log(item);
     PhotoSet.getPhotos(item)
       .success(function(data) {
 
-        $scope.photos = data.photoset.photo
-          //console.log(data.photoset.photo)
+        $scope.photos = data.photoset.photo.slice(0, 100)
+          //  console.log("hihi", data.photoset.photo)
         _.each(data.photoset.photo, function(item) {
 
           if ($scope.idHolder.indexOf(item.id) === -1) {
             // console.log(item.id)
             $scope.idHolder.push(item.id)
-            console.log("more thing got pushed")
+              //   console.log("more thing got pushed")
             $scope.pix.push(item)
           }
         })
@@ -59,14 +78,15 @@ angular.module('myFlickr', ['myFlickr.services', 'ngResource'])
     $scope.idHolder = []
     console.log(username)
     PhotoSet.getUser(username)
-      .success(function(data) {
-        console.log(data)
-        if (data.code === 1 || undefined) {
-          alert(data.message)
-        } else {
-          $scope.getSet(data.user.id)
-        }
-      })
+
+    .success(function(data) {
+      console.log(data)
+      if (data.code === 1 || undefined) {
+        alert(data.message)
+      } else {
+        $scope.getSet(data.user.id)
+      }
+    })
   }
 
 
