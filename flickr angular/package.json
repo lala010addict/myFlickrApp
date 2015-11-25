@@ -2,7 +2,7 @@
   "name": "myFlickr",
   "version": "1.0.0",
   "description": "An Automatic Photo Portfolio Generator",
-  "main": "server.js",
+  "start": "node server.js",
   "scripts": {
     "test": "test"
   },
