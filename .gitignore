@@ -1,5 +1,8 @@
 ### node etc ###
 
+config.json
+auth.js
+
 # Logs
 logs
 *.log
