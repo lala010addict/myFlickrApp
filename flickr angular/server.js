@@ -48,8 +48,8 @@ var routes = require('./server/users/userRoutes')(passport);
 //app.use(express.static(__dirname + '/client'));
 
 app.use('/', routes);
-var movies = require('./server/movies/movieDBController');
-app.use('/movies', movies);
+// var movies = require('./server/movies/movieDBController');
+// app.use('/movies', movies);
 
 //app.use('/', routes);
 

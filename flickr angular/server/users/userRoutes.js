@@ -54,7 +54,7 @@ module.exports = function(passport) {
         if (err) {
           return next(err);
         }
-     res.redirect('/' + user.name);
+        res.redirect('/' + user.name);
         //   return   res.sendfile('client/index.html')
         //   return res.sendfile('client/index.html', {
         //     username : 'booh!'
@@ -63,27 +63,27 @@ module.exports = function(passport) {
     })(req, res, next);
 
     console.log(res, req)
-  //  return res.sendfile('client/index.html')
+      //  return res.sendfile('client/index.html')
 
   });
 
 
 
 
-// router.get('/', function(request, res, next) {
+  // router.get('/', function(request, res, next) {
 
-//       res.redirect('/')
+  //       res.redirect('/')
 
-//     });
+  //     });
 
 
-    router.get('/:name', function(request, res, next) {
-      // var username = request.params.name;
-      // console.log(username);
-      //  res.sendfile(path.join(__dirname + '/index.html'));
-      res.sendfile('client/index.html')
+  router.get('/:name', function(request, res, next) {
+    // var username = request.params.name;
+    // console.log(username);
+    //  res.sendfile(path.join(__dirname + '/index.html'));
+    res.sendfile('client/index.html')
 
-    });
+  });
 
 
 
@@ -92,7 +92,7 @@ module.exports = function(passport) {
 
 
   // GET /logout
-  router.get('/logout', function(req, res, next) {
+  router.get('/flickr/logout', function(req, res, next) {
     req.logout();
     res.redirect('/');
   });

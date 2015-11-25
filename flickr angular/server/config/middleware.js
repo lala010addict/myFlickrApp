@@ -21,11 +21,9 @@ module.exports = function(app, express) {
   app.use(express.static(__dirname + '/../../client'));
   app.use(cookieParser());
   //register /api/... and assign routers that will take care of it 
-  app.use('/api/movies', movieRouter);
+ // app.use('/api/movies', movieRouter);
 
   app.use(helpers.errorLogger);
   app.use(helpers.errorHandler);
 
-  // inject our routers into their respective route files
-  require('../movies/movieRoutes.js')(movieRouter);
 };

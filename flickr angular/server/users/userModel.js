@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var Movie = require("../movies/movieModel")
 
 module.exports = mongoose.model('User', {
   id: String,

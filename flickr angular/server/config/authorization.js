@@ -25,17 +25,3 @@ exports.user = {
       next()
     }
 }
-
-
-/*
- *  movie authorizations routing middleware
- */
-
-exports.movie = {
-    hasAuthorization : function (req, res, next) {
-      if (req.movie.user.id != req.user.id) {
-        return res.redirect('/login')
-      }
-      next()
-    }
-}
