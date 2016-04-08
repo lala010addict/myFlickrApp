@@ -9,16 +9,16 @@ var dbConfig = require('./server/config/db');
 var mongoose = require('mongoose');
 // Connect to DB
 if (process.env.MONGOLAB_URI) {
-  mongoose.connect(process.env.MONGOLAB_URI);
+    mongoose.connect(process.env.MONGOLAB_URI);
 } else {
-  mongoose.connect(dbConfig.url);
+    mongoose.connect(dbConfig.url);
 }
 
 var db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function() {
-  console.log('db connection open, sweet!');
-  startServer();
+    console.log('db connection open, sweet!');
+    startServer();
 });
 
 
@@ -31,7 +31,7 @@ require('./server/config/middleware.js')(app, express);
 var passport = require('passport');
 var session = require('express-session');
 
-app.use(session({secret: 'mySecretKey'}));
+app.use(session({ secret: 'mySecretKey' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -55,40 +55,16 @@ app.use('/', routes);
 
 // This middleware will allow us to use the currentUser in our views and routes.
 app.use(function(req, res, next) {
-  global.currentUser = req.user;
-  next();
+    global.currentUser = req.user;
+    next();
 });
 
-// // Routes
-// app.use('/', routes);
-// // app.use('/users', users);
-// app.use('/movies', movies);
+app.use('/api/favorites', require('./server/favorites'));
 
-/// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-// development error handler
-// will print stacktrace
-// if (app.get('env') === 'development') {
-//   app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//       message: err.message,
-//       error: err
-//     });
-//   });
-// }
-
-
-// omar:
 function startServer() {
-  var server = app.listen(process.env.PORT || 3000, function() {
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-  });  
+    var server = app.listen(process.env.PORT || 3000, function() {
+        console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+    });
 }
 
 
