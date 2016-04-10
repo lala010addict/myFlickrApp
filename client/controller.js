@@ -1,4 +1,16 @@
-myFlickr.controller('menu', ['$scope', "$http", 'PhotoSet', "$location", '$routeParams', function($scope, $http, PhotoSet, $location, $routeParams) {
+myFlickr.controller('menu', ['$scope','Auth', "$http", 'PhotoSet', "$location", '$routeParams', '$log',  function($scope, Auth, $http, PhotoSet, $location, $routeParams, $log) {
+      $scope.getCurrentUser = Auth.getCurrentUser;
+      $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.name = $scope.getCurrentUser().name;
+    $scope.userID = $scope.getCurrentUser()._id;
+
+console.log(  $scope.getCurrentUser());
+console.log(   $scope.isLoggedIn());
+
+
+
+
+
   $scope.data = {}
   $scope.all = function(id) {
 

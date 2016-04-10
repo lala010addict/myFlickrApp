@@ -1,4 +1,4 @@
-var myFlickr = angular.module('myFlickr', ['ngRoute'])
+var myFlickr = angular.module('myFlickr', ['ngRoute', 'myFlickr.auth', 'ngResource'])
 
 // .config(function($routeProvider) {
 
