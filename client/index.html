@@ -20,8 +20,8 @@
             <div class="menu-wrap">
                 <nav class="menu">
                     <div class="srch">
-                        <div><a id='signin' href='login/flickr' ng-hide="isLoggedIn"> Sign in with Flickr</a>
-                            <a id='signin' href='flickr/logout' ng-click='logout()' ng-show="isLoggedIn">Sign Out</a>
+                        <div><a id='signin' href='login/flickr' ng-hide="signin()"> Sign in with Flickr</a>
+                            <a id='signin' href='flickr/logout' ng-click='logout()' ng-show="signin()">Sign Out</a>
                         </div>
                         <input ng-model="username" type="text" placeholder="Flickr Username">&nbsp;
                         <a ng-click="getUser(username)" id="s">Search</a>

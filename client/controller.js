@@ -11,6 +11,11 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     $scope.checked = false;
     var response = $scope.getCurrentUser();
 
+    $scope.signin = function() {
+        if ($scope.userInfo) {
+            return true
+        } else { false }
+    }
 
     var checkIfLoggedIn = function() {
         if (response.$promise !== undefined) {
@@ -38,7 +43,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
     checkIfLoggedIn();
 
-    $scope.ok = false;
+
 
     $scope.favoritePictures = [];
 
@@ -71,10 +76,6 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     }
 
 
-
-
-
-
     $scope.like = function(id, farm, server, secret) {
         $scope.formData.picture_id = id;
         $scope.formData.picture_farm = farm;
@@ -83,7 +84,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
         $http.post('/api/favorites', $scope.formData)
             .then(function(data) {
                 console.log(data);
-
+                $scope.getUser($scope.username);
             })
 
         .catch(function(err) {
