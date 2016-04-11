@@ -60,6 +60,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/api/favorites', require('./server/favorites'));
+// app.use('/api/users', require('./server/users/userRoutes'));
 
 function startServer() {
     var server = app.listen(process.env.PORT || 3000, function() {

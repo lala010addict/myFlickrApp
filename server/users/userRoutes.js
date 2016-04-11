@@ -4,24 +4,37 @@ var session = require('express-session');
 var mongoose = require('mongoose')
 var User = mongoose.model('User')
 var async = require('async')
-var auth = require('../config/authorization.js')
+var auth = require('../config/auth.service.js')
+var passport = require('passport');
 var path = require('path');
-var setTokenCookie = require('../config/auth.service.js');
 var jwt = require('jsonwebtoken');
 var config = require('../config/auth');
 
+var controller = require('./userController.js');
 
-var isAuthenticated = function(req, res, next) {
-    // if user is authenticated in the session, call the next() to call the next request handler 
-    // Passport adds this method to request object. A middleware is allowed to add properties to
-    // request and response objects
-    if (req.isAuthenticated())
-        return next();
-    // if the user is not authenticated then redirect him to the login page
-    res.redirect('/');
+var signToken = function(id, role) {
+    return jwt.sign({ _id: id, role: role }, config.secrets.session, {
+        expiresIn: 60 * 60 * 5
+    });
 }
 
-module.exports = function(passport) {
+/**
+ * Set token cookie directly for oAuth strategies
+ */
+var setTokenCookie = function(req, res) {
+    if (!req.user) {
+        return res.status(404).send('It looks like you aren\'t logged in, please try again.');
+    }
+    // console.log(req.user, 'req.user._id')
+    var token = signToken(req.user._id, req.user.role);
+    //   console.log(token, 'tokentokentokentokentokentokentokentoken')
+    res.cookie('token', token);
+    res.redirect('/' + req.user.name);
+}
+
+
+
+module.exports = function() {
 
     // route for flickr authentication and login
     // different scopes while logging in
@@ -45,49 +58,10 @@ module.exports = function(passport) {
     //   });
 
 
-    router.get('/login/flickr/callback', function(req, res, next) {
-
-        passport.authenticate('flickr', function(err, user, info) {
-            if (err) {
-                return next(err);
-            }
-            if (!user) {
-                return res.redirect('/login/flickr');
-            }
-            req.logIn(user, function(err) {
-                if (err) {
-                    return next(err);
-                }
-                console.log('isAuthenticated', req.isAuthenticated())
-
-                var signToken = function(id, role) {
-                    return jwt.sign({ _id: id, role: role }, config.secrets.session, {
-                        expiresIn: 60 * 60 * 5
-                    });
-                }
-                var token = signToken(user._id, user.role);
-                res.cookie('token', token);
-
-
-                res.redirect('/' + user.name);
-                //   return   res.sendfile('client/index.html')
-                //   return res.sendfile('client/index.html', {
-                //     username : 'booh!'
-                // });
-            });
-
-
-
-
-        })(req, res, next);
-
-
-
-        // console.log(res, req)
-        //  return res.sendfile('client/index.html')
-
-    });
-
+    router.get('/login/flickr/callback', passport.authenticate('flickr', {
+        failureRedirect: '/signup',
+        session: false
+    }), setTokenCookie);
 
 
 
@@ -109,13 +83,22 @@ module.exports = function(passport) {
 
 
 
+    router.get('/api/users', controller.index);
+    // router.delete('/:id', auth.hasRole('admin'), controller.destroy);
+    router.get('/api/users/me', auth.isAuthenticated(), controller.me);
+    // router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+    router.get('/api/users/:id', auth.isAuthenticated(), controller.show);
+    // router.post('/', controller.create);
+    // router.use('/me/favorites', auth.isAuthenticated(), controller.meParams, require('../favorites'));
 
 
 
     // GET /logout
     router.get('/flickr/logout', function(req, res, next) {
-        req.logout();
-        res.redirect('/');
+      
+        req.session.destroy();
+          console.log(req.session, 'req.session')
+        // res.redirect('/');
     });
 
     router.get('/', function(req, res, next) {
