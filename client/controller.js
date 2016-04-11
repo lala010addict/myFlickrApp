@@ -8,23 +8,35 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     $scope.getToken = Auth.getToken;
     $scope.userInfo = '';
     $scope.formData = {};
+    $scope.checked = false;
     var response = $scope.getCurrentUser();
-    if (response.$promise !== undefined) {
-        response.$promise.then(function(data) {
 
-            $scope.userInfo = data.toJSON(); //Changed data.data.topics to data.topics
-            console.log($scope.userInfo)
-            if ($scope.userInfo.name === $location.absUrl().split('/')[3]) {
-                $scope.isLoggedIn = true;
-                $scope.formData.user_id = $scope.userInfo._id;
 
-            } else {
-                console.log('nonono')
-            }
+    var checkIfLoggedIn = function() {
+        if (response.$promise !== undefined) {
+            response.$promise.then(function(data) {
 
-        });
+                $scope.userInfo = data.toJSON(); //Changed data.data.topics to data.topics
+                console.log($scope.userInfo)
+                if ($scope.userInfo.name === $scope.username) {
+                    $scope.isLoggedIn = true;
+                    $scope.checked = true;
+                    $scope.formData.user_id = $scope.userInfo._id;
 
+                } else {
+                    $scope.isLoggedIn = false;
+                    $scope.checked = false;
+                    console.log('nonono')
+                }
+
+            });
+
+        }
     }
+
+    checkIfLoggedIn();
+
+
 
     $scope.like = function(id) {
         $scope.formData.picture = id;
@@ -117,6 +129,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     //booh!
 
     $scope.getUser = function(username) {
+        checkIfLoggedIn();
         $scope.pix = [];
         $scope.idHolder = []
         console.log(username)

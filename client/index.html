@@ -40,11 +40,10 @@
                         <h1>{{username}}</h1></div>
                     <div class="gallery">
                         <a ng-repeat="x in photos" class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg">
-
-  <div> <input class="update" type="button" value="Update" ng-click="like(x.id)"/></div>
-
-                        <img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg">
-                         
+                            <div>
+                                <input class="update" type="button" value="Update" ng-click="like(x.id)" ng-show="checked" />
+                            </div>
+                            <img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg">
                         </a>
                     </div>
                 </div>
