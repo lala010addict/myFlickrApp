@@ -3,7 +3,11 @@ var Schema = mongoose.Schema;
 
 
 var FavoriteSchema = new Schema({
-    picture: String,
+    picture_id: String,
+    picture_farm: String,
+    picture_server: String,
+    picture_secret: String,
+
     user_id: {
         type: Schema.Types.ObjectId,
         ref: 'User'

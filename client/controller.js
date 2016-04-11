@@ -36,10 +36,36 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
     checkIfLoggedIn();
 
+    $scope.ok = false;
+
+    var checkifLiked = function() {
+        $http.get('/api/favorites')
+            .success(function(data) {
+                console.log('checkiffollowed', data)
+                // _.forEach(data, function(item) {
+                //     if (item.user_id === $scope.followers.user_id) {
+                //         //  console.log('yes!!!!')
+                //         $scope.followid = item._id;
+                //         $scope.follow = 'Followed'
+                //         $scope.check = 'check';
+                //     }
+                // })
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    }
 
 
-    $scope.like = function(id) {
-        $scope.formData.picture = id;
+    checkifLiked();
+
+
+
+    $scope.like = function(id, farm, server, secret) {
+        $scope.formData.picture_id = id;
+        $scope.formData.picture_farm = farm;
+        $scope.formData.picture_server = server;
+        $scope.formData.picture_secret = secret;
         $http.post('/api/favorites', $scope.formData)
             .then(function(data) {
                 console.log(data);
