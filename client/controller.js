@@ -1,13 +1,43 @@
 myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location", '$routeParams', '$log', function($scope, Auth, $http, PhotoSet, $location, $routeParams, $log) {
+
     $scope.getCurrentUser = Auth.getCurrentUser;
-    $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.isLoggedIn = false;
     $scope.logout = Auth.logout;
-    $scope.name = $scope.getCurrentUser().name;
+
     $scope.userID = $scope.getCurrentUser()._id;
+    $scope.getToken = Auth.getToken;
+    $scope.userInfo = '';
+    $scope.formData = {};
+    var response = $scope.getCurrentUser();
+    if (response.$promise !== undefined) {
+        response.$promise.then(function(data) {
 
-    console.log('currentuser', $scope.getCurrentUser());
-    console.log($scope.isLoggedIn());
+            $scope.userInfo = data.toJSON(); //Changed data.data.topics to data.topics
+            console.log($scope.userInfo)
+            if ($scope.userInfo.name === $location.absUrl().split('/')[3]) {
+                $scope.isLoggedIn = true;
+                $scope.formData.user_id = $scope.userInfo._id;
 
+            } else {
+                console.log('nonono')
+            }
+
+        });
+
+    }
+
+    $scope.like = function(id) {
+        $scope.formData.picture = id;
+        $http.post('/api/favorites', $scope.formData)
+            .then(function(data) {
+                console.log(data);
+
+            })
+
+        .catch(function(err) {
+            console.error('Error: ' + err);
+        });
+    }
 
 
 
@@ -71,7 +101,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
             .success(function(data) {
 
                 $scope.photos = data.photoset.photo.slice(0, 100)
-                    //  console.log("hihi", data.photoset.photo)
+                console.log("hihi", data.photoset.photo)
                 _.each(data.photoset.photo, function(item) {
 
                     if ($scope.idHolder.indexOf(item.id) === -1) {

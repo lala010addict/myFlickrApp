@@ -16,11 +16,12 @@
 <body>
     <div ng-controller="menu">
         <div class="container">
+            <div ng-model='userInfo'>{{userInfo}}</div>
             <div class="menu-wrap">
                 <nav class="menu">
                     <div class="srch">
                         <div><a id='signin' href='login/flickr'> Sign in with Flickr</a>
-                    <!--     <a id='signin' href='flickr/logout' ng-click='logout()'>Sign Out</a> -->
+                            <a id='signin' href='flickr/logout' ng-click='logout()'>Sign Out</a>
                         </div>
                         <input ng-model="username" type="text" placeholder="Flickr Username">&nbsp;
                         <a ng-click="getUser(username)" id="s">Search</a>
@@ -38,7 +39,13 @@
                     <div id='right'>
                         <h1>{{username}}</h1></div>
                     <div class="gallery">
-                        <a ng-repeat="x in photos" class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg"><img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg"></a>
+                        <a ng-repeat="x in photos" class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg">
+
+  <div> <input class="update" type="button" value="Update" ng-click="like(x.id)"/></div>
+
+                        <img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg">
+                         
+                        </a>
                     </div>
                 </div>
             </div>
@@ -50,6 +57,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.swipebox/1.4.1/js/jquery.swipebox.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/2.1.08/jquery.masonry.min.js"></script>
     <script src="config.json"></script>
     <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>

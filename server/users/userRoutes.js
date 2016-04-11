@@ -98,7 +98,7 @@ module.exports = function() {
       
         req.session.destroy();
           console.log(req.session, 'req.session')
-        // res.redirect('/');
+        res.redirect('/');
     });
 
     router.get('/', function(req, res, next) {

@@ -38,39 +38,7 @@ h1 {
     color: #FF9900;
 }
 
-.gallery {
-    position: relative;
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    line-height: 0;
-    /* -webkit-column-count: 3;
-    -webkit-column-gap: 1px;*/
-    -webkit-column-count: 3;
-    /* Chrome, Safari, Opera */
-    -moz-column-count: 3;
-    /* Firefox */
-    column-count: 3;
-    -webkit-column-gap: 1px;
-    /* Chrome, Safari, Opera */
-    -moz-column-gap: 1px;
-    /* Firefox */
-    column-gap: 1px;
-}
 
-
-/*
-    -webkit-column-count: 3;
-    -webkit-column-gap: 2px;
-       -moz-column-count: 4;
-    -moz-column-gap: 0px;
-     column-count: 4;
-    column-gap: 10px;*/
-
-.gallery img {
-    width: 100% !important;
-    height: auto !important;
-}
 
 input,
 textarea {
@@ -143,3 +111,4 @@ li:hover {
         margin-left: 110px;
     }
 }
+

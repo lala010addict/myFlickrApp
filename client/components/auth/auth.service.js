@@ -9,7 +9,9 @@
 
 
         if ($cookies.get('token') && $location.path() !== '/flickr/logout') {
+
             currentUser = User.get();
+
         }
 
         var Auth = {
@@ -21,32 +23,33 @@
              * @param  {Function} callback - optional, function(error, user)
              * @return {Promise}
              */
-            login({ email, password }, callback) {
-                return $http.post('/auth/local', {
-                        email: email,
-                        password: password
-                    })
-                    .then(res => {
-                        $cookies.put('token', res.data.token);
-                        currentUser = User.get();
-                        return currentUser.$promise;
-                    })
-                    .then(user => {
-                        safeCb(callback)(null, user);
-                        return user;
-                    })
-                    .catch(err => {
-                        Auth.logout();
-                        safeCb(callback)(err.data);
-                        return $q.reject(err.data);
-                    });
-            },
+            // login({ email, password }, callback) {
+            //     return $http.post('/auth/local', {
+            //             email: email,
+            //             password: password
+            //         })
+            //         .then(res => {
+            //             $cookies.put('token', res.data.token);
+            //             currentUser = User.get();
+            //             return currentUser.$promise;
+            //         })
+            //         .then(user => {
+            //             safeCb(callback)(null, user);
+            //             return user;
+            //         })
+            //         .catch(err => {
+            //             Auth.logout();
+            //             safeCb(callback)(err.data);
+            //             return $q.reject(err.data);
+            //         });
+            // },
 
             /**
              * Delete access token and user info
              */
             logout() {
-                $cookies.remove('access_token');
+                $cookies.remove('token');
+
                 currentUser = {};
             },
 
@@ -57,19 +60,19 @@
              * @param  {Function} callback - optional, function(error, user)
              * @return {Promise}
              */
-            createUser(user, callback) {
+            // createUser(user, callback) {
 
-                return User.save(user,
-                    function(data) {
-                        $cookies.put('token', data.token);
-                        currentUser = User.get();
-                        return safeCb(callback)(null, user);
-                    },
-                    function(err) {
-                        Auth.logout();
-                        return safeCb(callback)(err);
-                    }).$promise;
-            },
+            //     return User.save(user,
+            //         function(data) {
+            //             $cookies.put('token', data.token);
+            //             currentUser = User.get();
+            //             return safeCb(callback)(null, user);
+            //         },
+            //         function(err) {
+            //             Auth.logout();
+            //             return safeCb(callback)(err);
+            //         }).$promise;
+            // },
 
             /**
              * Change password
@@ -79,16 +82,16 @@
              * @param  {Function} callback    - optional, function(error, user)
              * @return {Promise}
              */
-            changePassword(oldPassword, newPassword, callback) {
-                return User.changePassword({ id: currentUser._id }, {
-                    oldPassword: oldPassword,
-                    newPassword: newPassword
-                }, function() {
-                    return safeCb(callback)(null);
-                }, function(err) {
-                    return safeCb(callback)(err);
-                }).$promise;
-            },
+            // changePassword(oldPassword, newPassword, callback) {
+            //     return User.changePassword({ id: currentUser._id }, {
+            //         oldPassword: oldPassword,
+            //         newPassword: newPassword
+            //     }, function() {
+            //         return safeCb(callback)(null);
+            //     }, function(err) {
+            //         return safeCb(callback)(err);
+            //     }).$promise;
+            // },
 
             /**
              * Gets all available info on a user
@@ -99,7 +102,10 @@
              */
             getCurrentUser(callback) {
                 if (arguments.length === 0) {
+                    // console.log('currentUser2', currentUser.name);
+
                     return currentUser;
+
                 }
                 // console.log($cookies, '$cookies', User, 'User')
 
