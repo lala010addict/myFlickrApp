@@ -21,8 +21,9 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
                 if ($scope.userInfo.name === $scope.username) {
                     $scope.isLoggedIn = true;
                     $scope.checked = true;
+                    console.log($scope.userInfo)
                     $scope.formData.user_id = $scope.userInfo._id;
-
+                    $scope.formData.username = $scope.userInfo.name
                 } else {
                     $scope.isLoggedIn = false;
                     $scope.checked = false;
@@ -43,27 +44,20 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     var checkifLiked = function() {
         $http.get('/api/favorites')
             .success(function(data) {
-                   $scope.favoritePictures = data;
-                console.log('checkiffollowed',       $scope.favoritePictures)
+                $scope.favoritePictures = data;
+                console.log('checkiffollowed', $scope.favoritePictures)
 
                 var ids = _.pluck(data, 'picture_id')
 
 
-                var newPhotoArray =  $scope.photos.filter(function(obj) {
+                var newPhotoArray = $scope.photos.filter(function(obj) {
                     return ids.indexOf(obj.id) === -1;
                 });
 
                 console.log(newPhotoArray)
 
-                 $scope.photos = newPhotoArray
-                // _.forEach(data, function(item) {
-                //     console.log(_.filter($scope.photos, function(num) {
-                //         console.log(num.picture_id);
-                //         console.log($scope.photos._id);
-                //         return num.picture_id === $scope.photos._id
-                //     }))
+                $scope.photos = newPhotoArray
 
-                // })
             })
             .error(function(data) {
                 console.log('Error: ' + data);
@@ -153,8 +147,8 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
             .success(function(data) {
 
                 $scope.photos = data.photoset.photo.slice(0, 100)
-                    checkifLiked();
-                    // console.log("hihi", data.photoset.photo)
+                checkifLiked();
+                // console.log("hihi", data.photoset.photo)
                 _.each(data.photoset.photo, function(item) {
 
                     if ($scope.idHolder.indexOf(item.id) === -1) {

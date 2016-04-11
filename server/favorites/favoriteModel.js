@@ -7,7 +7,7 @@ var FavoriteSchema = new Schema({
     picture_farm: String,
     picture_server: String,
     picture_secret: String,
-
+    username: String,
     user_id: {
         type: Schema.Types.ObjectId,
         ref: 'User'
