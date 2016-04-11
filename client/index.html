@@ -40,6 +40,10 @@
                         <h1>{{username}}</h1></div>
                     <div class="gallery">
                         <div ng-repeat="x in favoritePictures">
+
+                          <input class="update" type="button" value="dislike" ng-click="dislike(x._id)" ng-show="checked" />
+
+
                             <a class="swipebox" ng-href="https://farm{{x.picture_farm}}.static.flickr.com/{{x.picture_server}}/{{x.picture_id}}_{{x.picture_secret}}_b.jpg">
                                 <img style="margin: 2px;" ng-src="https://farm{{x.picture_farm}}.static.flickr.com/{{x.picture_server}}/{{x.picture_id}}_{{x.picture_secret}}_z.jpg">
                             </a>
@@ -48,7 +52,7 @@
                     <div class="gallery">
                         <div ng-repeat="x in photos">
                             <input class="update" type="button" value="like" ng-click="like(x.id, x.farm, x.server, x.secret)" ng-show="checked" />
-                            <input class="update" type="button" value="liked" ng-click="like(x.id, x.farm, x.server, x.secret)" ng-show="checked && ok" />
+                          
                             <a class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg">
                                 <img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg">
                             </a>

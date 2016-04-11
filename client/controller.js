@@ -4,7 +4,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     $scope.isLoggedIn = false;
     $scope.logout = Auth.logout;
 
-    $scope.userID = $scope.getCurrentUser()._id;
+    // $scope.userID = $scope.getCurrentUser()._id;
     $scope.getToken = Auth.getToken;
     $scope.userInfo = '';
     $scope.formData = {};
@@ -93,7 +93,16 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     }
 
 
+    $scope.dislike = function(id) {
+        $http.delete('/api/favorites/' + id)
+            .success(function(data) {
+                $scope.getUser($scope.username);
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
 
+    }
 
     $scope.data = {}
     $scope.all = function(id) {
