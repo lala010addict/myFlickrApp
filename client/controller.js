@@ -17,7 +17,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
             response.$promise.then(function(data) {
 
                 $scope.userInfo = data.toJSON(); //Changed data.data.topics to data.topics
-                console.log($scope.userInfo)
+                // console.log($scope.userInfo)
                 if ($scope.userInfo.name === $scope.username) {
                     $scope.isLoggedIn = true;
                     $scope.checked = true;
@@ -38,17 +38,31 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
     $scope.ok = false;
 
+    $scope.favoritePictures = [];
+
     var checkifLiked = function() {
         $http.get('/api/favorites')
             .success(function(data) {
-                console.log('checkiffollowed', data)
+                   $scope.favoritePictures = data;
+                console.log('checkiffollowed',       $scope.favoritePictures)
+
+                var ids = _.pluck(data, 'picture_id')
+
+
+                var newPhotoArray =  $scope.photos.filter(function(obj) {
+                    return ids.indexOf(obj.id) === -1;
+                });
+
+                console.log(newPhotoArray)
+
+                 $scope.photos = newPhotoArray
                 // _.forEach(data, function(item) {
-                //     if (item.user_id === $scope.followers.user_id) {
-                //         //  console.log('yes!!!!')
-                //         $scope.followid = item._id;
-                //         $scope.follow = 'Followed'
-                //         $scope.check = 'check';
-                //     }
+                //     console.log(_.filter($scope.photos, function(num) {
+                //         console.log(num.picture_id);
+                //         console.log($scope.photos._id);
+                //         return num.picture_id === $scope.photos._id
+                //     }))
+
                 // })
             })
             .error(function(data) {
@@ -57,7 +71,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     }
 
 
-    checkifLiked();
+
 
 
 
@@ -139,7 +153,8 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
             .success(function(data) {
 
                 $scope.photos = data.photoset.photo.slice(0, 100)
-                console.log("hihi", data.photoset.photo)
+                    checkifLiked();
+                    // console.log("hihi", data.photoset.photo)
                 _.each(data.photoset.photo, function(item) {
 
                     if ($scope.idHolder.indexOf(item.id) === -1) {
