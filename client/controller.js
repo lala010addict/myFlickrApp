@@ -44,19 +44,24 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     var checkifLiked = function() {
         $http.get('/api/favorites')
             .success(function(data) {
-                $scope.favoritePictures = data;
-                console.log('checkiffollowed', $scope.favoritePictures)
 
-                var ids = _.pluck(data, 'picture_id')
+                if (data[0].username === $scope.username) {
+                    $scope.favoritePictures = data;
+                    console.log('checkiffollowed', $scope.favoritePictures)
+
+                    var ids = _.pluck(data, 'picture_id')
 
 
-                var newPhotoArray = $scope.photos.filter(function(obj) {
-                    return ids.indexOf(obj.id) === -1;
-                });
+                    var newPhotoArray = $scope.photos.filter(function(obj) {
+                        return ids.indexOf(obj.id) === -1;
+                    });
 
-                console.log(newPhotoArray)
+                    console.log(newPhotoArray)
 
-                $scope.photos = newPhotoArray
+                    $scope.photos = newPhotoArray;
+                }
+
+
 
             })
             .error(function(data) {
