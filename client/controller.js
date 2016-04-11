@@ -24,6 +24,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
                     console.log($scope.userInfo)
                     $scope.formData.user_id = $scope.userInfo._id;
                     $scope.formData.username = $scope.userInfo.name
+
                 } else {
                     $scope.isLoggedIn = false;
                     $scope.checked = false;
