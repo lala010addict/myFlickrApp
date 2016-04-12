@@ -21,7 +21,7 @@ db.once('open', function() {
     startServer();
 });
 
-
+// http://localhost:3000/login/flickr/callback
 
 var app = express();
 

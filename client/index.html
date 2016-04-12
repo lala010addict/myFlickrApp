@@ -49,7 +49,7 @@
                                 <a class="swipebox" ng-href="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_b.jpg" target="_blank">
                                     <img src="" data-ng-src="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_z.jpg">
                                 </a>
-                                <input type="button" value="dislike" data-ng-click="mother.dislike(card._id, card.picture_photosetID)" ng-show="mother.checked" />
+                                <input style="margin-left: 45%;" type="button" value="dislike" data-ng-click="mother.dislike(card._id, card.picture_photosetID)" ng-show="mother.checked" />
                             </div>
                         </div>
                         <div style="clear:both;"></div>
@@ -58,7 +58,7 @@
                                 <a class="swipebox" ng-href="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_b.jpg" target="_blank">
                                     <img src="" data-ng-src="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_z.jpg">
                                 </a>
-                                <input type="button" value="like" data-ng-click="mother.like(card.id, card.farm, card.server, card.secret)" ng-show="mother.checked" />
+                                <input  style="margin-left: 45%;" type="button" value="like" data-ng-click="mother.like(card.id, card.farm, card.server, card.secret)" ng-show="mother.checked" />
                             </div>
                         </div>
                     </div>
