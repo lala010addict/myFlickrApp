@@ -138,9 +138,12 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     $scope.data = {}
     $scope.all = function(id) {
         console.log($scope.favoritePictures.length)
-            //  $scope.photos = id.slice(0, 300)
+ 
         if ($scope.favoritePictures.length === 0) {
-            $scope.concatPix = id.slice(0, 300)
+ $scope.photos = id.slice(0, 300)
+          $scope.concatPix = id.slice(0, 300)
+
+         
         } else {
             var ids = _.pluck($scope.favoritePictures, 'picture_id')
 
