@@ -55,7 +55,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     var checkifLiked = function(item) {
         $http.get('/api/favorites')
             .success(function(data) {
-                console.log('item', item)
+                console.log('data', data)
 
                 // $scope.favePerSet = [];
                 // _.each($scope.favoritePictures, function(thing) {
@@ -67,14 +67,19 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
 
 
-                if (data.length !== 0 && data[0].username === $scope.username) {
+                var findName = _.where(data, { username: $scope.username })
+                console.log('contains', findName)
 
-                    $scope.favePerSet = data;
+                if (data.length !== 0 && findName.length !== 0) {
+
+                    $scope.favePerSet = _.filter(data, function(name) {
+                        return name.username === $scope.username
+                    })
 
                     var filteredData = _.filter(data, function(name) {
-                            return name.username === $scope.username && name.picture_photosetID === item
-                        })
-                        //   console.log(filteredData, 'filteredData')
+                        return name.username === $scope.username && name.picture_photosetID === item
+                    })
+                    console.log(filteredData, 'filteredData')
                     $scope.favoritePictures = filteredData;
                     var ids = _.pluck(filteredData, 'picture_id')
 
@@ -222,7 +227,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
 
     $scope.getPhotos = function(item) {
-        // console.log($scope.favoritePictures[0], '$scope.favoritePictures')
+        console.log(item)
 
         PhotoSet.getPhotos(item)
             .success(function(data) {
