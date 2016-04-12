@@ -48,16 +48,31 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     $scope.photos = [];
     $scope.concatPix;
 
-    var checkifLiked = function() {
+    $scope.favePerSet = [];
+
+
+
+    var checkifLiked = function(item) {
         $http.get('/api/favorites')
             .success(function(data) {
+                console.log('item', item)
+
+                // $scope.favePerSet = [];
+                // _.each($scope.favoritePictures, function(thing) {
+                //     if (thing.picture_photosetID === item) {
+                //         $scope.favePerSet.push(thing)
+                //     }
+                //     //      console.log(' $scope.favePerSet ',  $scope.favePerSet );
+                // })
+
+
 
                 if (data.length !== 0 && data[0].username === $scope.username) {
 
-                    //console.log('checkiffollowed', $scope.favoritePictures)
+                    $scope.favePerSet = data;
 
                     var filteredData = _.filter(data, function(name) {
-                            return name.username === $scope.username
+                            return name.username === $scope.username && name.picture_photosetID === item
                         })
                         //   console.log(filteredData, 'filteredData')
                     $scope.favoritePictures = filteredData;
@@ -110,7 +125,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
         $scope.formData.picture_secret = secret;
 
 
-        console.log($scope.formData)
+        //   console.log($scope.formData)
 
         $http.post('/api/favorites', $scope.formData)
             .then(function(data) {
@@ -137,13 +152,13 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
     $scope.data = {}
     $scope.all = function(id) {
-        console.log($scope.favoritePictures.length)
- 
+        //  console.log($scope.favoritePictures.length)
+        $scope.favoritePictures = $scope.favePerSet
         if ($scope.favoritePictures.length === 0) {
- $scope.photos = id.slice(0, 300)
-          $scope.concatPix = id.slice(0, 300)
+            $scope.photos = id.slice(0, 300)
+            $scope.concatPix = id.slice(0, 300)
 
-         
+
         } else {
             var ids = _.pluck($scope.favoritePictures, 'picture_id')
 
@@ -192,7 +207,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
                     alert("NO PHOTO ALBUMS FOUND FOR THIS USER");
                 } else {
                     $scope.data = data.photosets.photoset
-                        // //console.log(data.photosets.photoset)
+                        //  console.log('$scope.data ',data.photosets.photoset)
                     _.each(data.photosets.photoset, function(item) {
                         // //console.log(item.id)
                         $scope.getPhotos(item.id)
@@ -202,18 +217,19 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     }
 
     $scope.pix = [];
-    $scope.idHolder = []
+    $scope.idHolder = [];
 
-    //$scope.getSet()
+
 
     $scope.getPhotos = function(item) {
-        //  //console.log(item);
+        // console.log($scope.favoritePictures[0], '$scope.favoritePictures')
+
         PhotoSet.getPhotos(item)
             .success(function(data) {
 
                 $scope.photos = data.photoset.photo.slice(0, 100)
-                checkifLiked();
-                //   console.log("hihi",     $scope.photos )
+                checkifLiked(item);
+                //  console.log("hihi", $scope.photos)
                 _.each(data.photoset.photo, function(item) {
 
                     if ($scope.idHolder.indexOf(item.id) === -1) {
