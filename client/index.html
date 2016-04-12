@@ -21,6 +21,12 @@
     }
     */
     
+    .deckgrid {
+         padding: 20px;
+    padding-left: 29px;
+    padding-right: 29px;
+    }
+
     img {
         width: 100%;
     }
@@ -77,7 +83,7 @@
                 <div class="content">
                     <div id='right'>
                         <h1>{{username}}</h1></div>
-                    <div ng-hide="checked">
+                    <div ng-hide="signin()">
                         <div deckgrid class="deckgrid" source="concatPix">
                             <div class="a-card">
                                 <a class="swipebox" ng-href="https://farm{{card.picture_farm || card.farm }}.static.flickr.com/{{card.picture_server || card.server }}/{{card.picture_id || card.id}}_{{card.picture_secret || card.secret}}_b.jpg" target="_blank">
@@ -86,23 +92,25 @@
                             </div>
                         </div>
                     </div>
-                       <div ng-show="checked">
-                    <div deckgrid class="deckgrid" source="favoritePictures">
-                        <div class="a-card">
-                            <a class="swipebox" ng-href="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_b.jpg" target="_blank">
-                                <img src="" data-ng-src="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_z.jpg">
-                            </a>
-                            <input type="button" value="dislike" data-ng-click="mother.dislike(card._id)" ng-show="mother.checked" />
+                    <div ng-show="checked">
+                        <div deckgrid class="deckgrid" source="favoritePictures">
+                            <div class="a-card">
+                                <a class="swipebox" ng-href="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_b.jpg" target="_blank">
+                                    <img src="" data-ng-src="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_z.jpg">
+                                </a>
+                                <input type="button" value="dislike" data-ng-click="mother.dislike(card._id)" ng-show="mother.checked" />
+                            </div>
                         </div>
-                    </div>
-                    <div deckgrid class="deckgrid" source="photos">
-                        <div class="a-card">
-                            <a class="swipebox" ng-href="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_b.jpg" target="_blank">
-                                <img src="" data-ng-src="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_z.jpg">
-                            </a>
-                            <input type="button" value="like" data-ng-click="mother.like(card.id, card.farm, card.server, card.secret)" ng-show="mother.checked" />
+
+
+                        <div deckgrid class="deckgrid" source="photos">
+                            <div class="a-card">
+                                <a class="swipebox" ng-href="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_b.jpg" target="_blank">
+                                    <img src="" data-ng-src="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_z.jpg">
+                                </a>
+                                <input type="button" value="like" data-ng-click="mother.like(card.id, card.farm, card.server, card.secret)" ng-show="mother.checked" />
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <!-- like(card.id, card.farm, card.server, card.secret) -->
                     <!--                                         <div class="gallery">
