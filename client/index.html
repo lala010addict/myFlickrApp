@@ -8,53 +8,6 @@
     <link rel="stylesheet" type="text/css" href="../css/style_menu.css" />
     <link rel="stylesheet" type="text/css" href="../css/menu_topexpand.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.swipebox/1.4.1/css/swipebox.min.css">
-    <style type="text/css">
-    .a-card {
-        height: auto;
-        /*    border: 3px solid black;*/
-        margin: 1px;
-    }
-    /*   
-    h2 {
-        margin: 0;
-        padding: 10px;
-    }
-    */
-    
-    .deckgrid {
-        padding: 20px;
-        padding-left: 29px;
-        padding-right: 29px;
-    }
-    
-    img {
-        width: 100%;
-    }
-    
-    .deckgrid .column {
-        float: left;
-    }
-    
-    .deckgrid .column-1-1 {
-        width: 100%;
-    }
-    
-    .deckgrid .column-1-4 {
-        width: 25%;
-    }
-    
-    .deckgrid[deckgrid]::before {
-        content: '1 .column.column-1-1';
-        font-size: 0;
-        visibility: hidden;
-    }
-    
-    @media screen and (min-width: 600px) {
-        .deckgrid[deckgrid]::before {
-            content: '4 .column.column-1-4';
-        }
-    }
-    </style>
     <title>myFlickrApp</title>
 </head>
 
@@ -73,8 +26,7 @@
                     </div>
                     <div class="icon-list">
                         <a ng-click="all(pix)" value='all' ng-model='values.status'>All</a>
-                        <a ng-repeat="x in data" ng-click="getPhotos(x.id)" value='else' ng-model='values.status'> {{x.title._content}}
-            </a>
+                        <a ng-repeat="x in data" ng-click="getPhotos(x.id)" value='else' ng-model='values.status'> {{x.title._content}} </a>
                     </div>
                 </nav>
             </div>
@@ -83,7 +35,7 @@
                 <div class="content">
                     <div id='right'>
                         <h1>{{username}}</h1></div>
-                    <div ng-hide="signin()">
+                    <div ng-hide="checked">
                         <div deckgrid class="deckgrid" source="concatPix">
                             <div class="a-card">
                                 <a class="swipebox" ng-href="https://farm{{card.picture_farm || card.farm }}.static.flickr.com/{{card.picture_server || card.server }}/{{card.picture_id || card.id}}_{{card.picture_secret || card.secret}}_b.jpg" target="_blank">
@@ -98,7 +50,7 @@
                                 <a class="swipebox" ng-href="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_b.jpg" target="_blank">
                                     <img src="" data-ng-src="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_z.jpg">
                                 </a>
-                                <input type="button" value="dislike" data-ng-click="mother.dislike(card._id)" ng-show="mother.checked" />
+                                <input type="button" value="dislike" data-ng-click="mother.dislike(card._id, card.picture_photosetID)" ng-show="mother.checked" />
                             </div>
                         </div>
                         <div style="clear:both;"></div>

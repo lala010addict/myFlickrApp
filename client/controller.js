@@ -51,9 +51,8 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     var checkifLiked = function() {
         $http.get('/api/favorites')
             .success(function(data) {
-                //  console.log(data)
 
-                if (data[0].username === $scope.username) {
+                if (data.length !== 0 && data[0].username === $scope.username) {
 
                     //console.log('checkiffollowed', $scope.favoritePictures)
 
@@ -90,16 +89,33 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
 
 
-    $scope.like = function(id, farm, server, secret) {
 
+    $scope.getAlbum = function(id) {
+
+        PhotoSet.getAlbum(id)
+            .success(function(data) {
+                $scope.formData.picture_photosetID = data.set[0].id;
+                $scope.formData.picture_photosetName = data.set[0].title;
+
+            })
+    };
+
+
+
+    $scope.like = function(id, farm, server, secret) {
+        $scope.getAlbum(id);
         $scope.formData.picture_id = id;
         $scope.formData.picture_farm = farm;
         $scope.formData.picture_server = server;
         $scope.formData.picture_secret = secret;
+
+
+        console.log($scope.formData)
+
         $http.post('/api/favorites', $scope.formData)
             .then(function(data) {
-                //console.log(data);
-                $scope.getUser($scope.username);
+                console.log(data);
+                $scope.getPhotos($scope.formData.picture_photosetID)
             })
 
         .catch(function(err) {
@@ -108,10 +124,10 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     }
 
 
-    $scope.dislike = function(id) {
+    $scope.dislike = function(id, set) {
         $http.delete('/api/favorites/' + id)
             .success(function(data) {
-                $scope.getUser($scope.username);
+                $scope.getPhotos(set)
             })
             .error(function(data) {
                 //console.log('Error: ' + data);
@@ -132,7 +148,8 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
             var newPhotoArray = id.slice(0, 300).filter(function(obj) {
                 return ids.indexOf(obj.id) === -1;
             });
-            $scope.photos = newPhotoArray
+            $scope.photos = newPhotoArray;
+            $scope.concatPix = $scope.favoritePictures.concat($scope.photos);
 
 
         }
@@ -167,7 +184,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
     $scope.getSet = function(userID) {
         PhotoSet.getSet(userID)
             .success(function(data) {
-                //  console.log(data.photosets.photoset, 'data.photosets.photoset')
+                //   console.log(data.photosets.photoset, 'data.photosets.photoset')
                 if (data.photosets.photoset.length < 1) {
                     alert("NO PHOTO ALBUMS FOUND FOR THIS USER");
                 } else {
@@ -193,7 +210,7 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
 
                 $scope.photos = data.photoset.photo.slice(0, 100)
                 checkifLiked();
-                //console.log("hihi", data.photoset.photo)
+                //   console.log("hihi",     $scope.photos )
                 _.each(data.photoset.photo, function(item) {
 
                     if ($scope.idHolder.indexOf(item.id) === -1) {
@@ -223,7 +240,11 @@ myFlickr.controller('menu', ['$scope', 'Auth', "$http", 'PhotoSet', "$location",
                 $scope.getSet(data.user.id)
             }
         })
-    }
+    };
+
+
+
+
 
 
 }])
