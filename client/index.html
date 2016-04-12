@@ -6,10 +6,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../css/style_menu.css" />
-    <!--   <link rel="stylesheet" type="text/css" href="../fonts/font-awesome-4.2.0/css/font-awesome.min.css
-" /> -->
     <link rel="stylesheet" type="text/css" href="../css/menu_topexpand.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.swipebox/1.4.1/css/swipebox.min.css">
+    <style type="text/css">
+    .a-card {
+        height: auto;
+        /*    border: 3px solid black;*/
+        margin: 1px;
+    }
+    /*   
+    h2 {
+        margin: 0;
+        padding: 10px;
+    }
+    */
+    
+    img {
+        width: 100%;
+    }
+    
+    .deckgrid .column {
+        float: left;
+    }
+    
+    .deckgrid .column-1-1 {
+        width: 100%;
+    }
+    
+    .deckgrid .column-1-4 {
+        width: 25%;
+    }
+    
+    .deckgrid[deckgrid]::before {
+        content: '1 .column.column-1-1';
+        font-size: 0;
+        visibility: hidden;
+    }
+    
+    @media screen and (min-width: 600px) {
+        .deckgrid[deckgrid]::before {
+            content: '4 .column.column-1-4';
+        }
+    }
+    </style>
     <title>myFlickrApp</title>
 </head>
 
@@ -38,37 +77,51 @@
                 <div class="content">
                     <div id='right'>
                         <h1>{{username}}</h1></div>
-                    <div class="gallery">
+                    <div deckgrid class="deckgrid" source="favoritePictures">
+                        <div class="a-card">
+                            <a class="swipebox" ng-href="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_b.jpg" target="_blank">
+                                <img src="" data-ng-src="https://farm{{card.picture_farm}}.static.flickr.com/{{card.picture_server}}/{{card.picture_id}}_{{card.picture_secret}}_z.jpg">
+                            </a>
+                            <input type="button" value="dislike" data-ng-click="mother.dislike(card._id)" ng-show="mother.checked" />
+                        </div>
+                    </div>
+                
+
+                      
+                    <div deckgrid class="deckgrid" source="photos">
+                        <div class="a-card">
+                            <a class="swipebox" ng-href="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_b.jpg" target="_blank">
+                                <img src="" data-ng-src="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_z.jpg">
+                            </a>
+                            <input type="button" value="like" data-ng-click="mother.like(card.id, card.farm, card.server, card.secret)" ng-show="mother.checked" />
+                        </div>
+                    </div>
+                    <!-- like(card.id, card.farm, card.server, card.secret) -->
+                    <!--                                         <div class="gallery">
                         <div ng-repeat="x in favoritePictures">
-
-                          <input class="update" type="button" value="dislike" ng-click="dislike(x._id)" ng-show="checked" />
-
-
+                            <input class="update" type="button" value="dislike" ng-click="dislike(x._id)" ng-show="checked" />
                             <a class="swipebox" ng-href="https://farm{{x.picture_farm}}.static.flickr.com/{{x.picture_server}}/{{x.picture_id}}_{{x.picture_secret}}_b.jpg">
                                 <img style="margin: 2px;" ng-src="https://farm{{x.picture_farm}}.static.flickr.com/{{x.picture_server}}/{{x.picture_id}}_{{x.picture_secret}}_z.jpg">
                             </a>
                         </div>
-                    </div>
-                    <div class="gallery">
                         <div ng-repeat="x in photos">
                             <input class="update" type="button" value="like" ng-click="like(x.id, x.farm, x.server, x.secret)" ng-show="checked" />
-                          
                             <a class="swipebox" ng-href="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_b.jpg">
                                 <img style="margin: 2px;" ng-src="https://farm{{x.farm}}.static.flickr.com/{{x.server}}/{{x.id}}_{{x.secret}}_z.jpg">
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.10/angular.min.js"></script>
+    <script src="https://cdn.rawgit.com/akoenig/angular-deckgrid/master/angular-deckgrid.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.10/angular-resource.js"></script>
     <script src="https://code.angularjs.org/1.3.0-rc.2/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.swipebox/1.4.1/js/jquery.swipebox.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/2.1.08/jquery.masonry.min.js"></script>
     <script src="config.json"></script>
     <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -87,6 +140,37 @@
     <script type="text/javascript" src="components/util/util.module.js"></script>
     <script type="text/javascript" src="components/util/util.service.js"></script>
     <script type="text/javascript" src="app.constant.js"></script>
+    <!-- isotope -->
+    <!--   <script src="../bower_components/jquery-bridget/jquery-bridget.js"></script>
+ <script src="../bower_components/angular-masonry/angular-masonry.js"></script>
+
+  <script src="../bower_components/masonry/masonry.js"></script>
+  <script src="../bower_components/imagesloaded/imagesloaded.js"></script>
+  <script src="../bower_components/ev-emitter/ev-emitter.js"></script>
+  <script src="../bower_components/desandro-matches-selector/matches-selector.js"></script>
+  <script src="../bower_components/fizzy-ui-utils/utils.js"></script>
+  <script src="../bower_components/get-size/get-size.js"></script>
+  <script src="../bower_components/outlayer/item.js"></script>
+  <script src="../bower_components/outlayer/outlayer.js"></script> -->
+    <!--     <script src="http://masonry.desandro.com/masonry.pkgd.js"></script>
+    <script src="../bower_components/isotope/jquery.isotope.min.js"></script>
+    <script src="../bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script> -->
+    <!--     <script src="../bower_components/angular-isotope/dist/angular-isotope.min.js"></script>
+    <script src="../bower_components/angular-masonry/angular-masonry.js"></script>
+    <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="../bower_components/masonry/masonry.js"></script>
+    <script src="../bower_components/outlayer/outlayer.js"></script>
+    <script src="../bower_components/isotope/jquery.isotope.min.js"></script>
+    <script src="../bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="../bower_components/get-style-property/get-style-property.js"></script>
+    <script src="../bower_components/get-size/get-size.js"></script>
+    <script src="../bower_components/fizzy-ui-utils/utils.js"></script>
+    <script src="../bower_components/eventie/eventie.js"></script>
+    <script src="../bower_components/eventEmitter/EventEmitter.min.js"></script>
+    <script src="../bower_components/ev-emitter/ev-emitter.js"></script>
+    <script src="../bower_components/desandro-matches-selector/matches-selector.js"></script>
+    <script src="../bower_components/angular-socket-io/socket.min.js"></script> -->
+    <!-- isotope end -->
     <script type="text/javascript">
     $(function() {
         $('.swipebox').swipebox();
@@ -94,6 +178,9 @@
             //  console.log('scrolled!!!!!!!!')
             classie.remove(document.body, 'show-menu');
         });
+
+
+
     })
     </script>
 </body>
