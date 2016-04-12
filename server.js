@@ -48,16 +48,7 @@ var routes = require('./server/users/userRoutes')(passport);
 //app.use(express.static(__dirname + '/client'));
 
 app.use('/', routes);
-// var movies = require('./server/movies/movieDBController');
-// app.use('/movies', movies);
 
-//app.use('/', routes);
-
-// This middleware will allow us to use the currentUser in our views and routes.
-app.use(function(req, res, next) {
-    global.currentUser = req.user;
-    next();
-});
 
 app.use('/api/favorites', require('./server/favorites'));
 // app.use('/api/users', require('./server/users/userRoutes'));
