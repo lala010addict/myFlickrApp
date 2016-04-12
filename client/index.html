@@ -22,11 +22,11 @@
     */
     
     .deckgrid {
-         padding: 20px;
-    padding-left: 29px;
-    padding-right: 29px;
+        padding: 20px;
+        padding-left: 29px;
+        padding-right: 29px;
     }
-
+    
     img {
         width: 100%;
     }
@@ -101,8 +101,7 @@
                                 <input type="button" value="dislike" data-ng-click="mother.dislike(card._id)" ng-show="mother.checked" />
                             </div>
                         </div>
-
-
+                        <div style="clear:both;"></div>
                         <div deckgrid class="deckgrid" source="photos">
                             <div class="a-card">
                                 <a class="swipebox" ng-href="https://farm{{card.farm}}.static.flickr.com/{{card.server}}/{{card.id}}_{{card.secret}}_b.jpg" target="_blank">
