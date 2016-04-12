@@ -32,3 +32,4 @@ An Automatic Photo Portfolio Generator for photographers using photos from userâ
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+/Users/jipeng/Git/thesis/lala010addict/myFlickrApp1
